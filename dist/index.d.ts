@@ -1,1 +1,1 @@
-export { Preview, Animation } from "./Preview";
+export { Preview, type Animation } from "./Preview";
