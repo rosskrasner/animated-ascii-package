@@ -1,0 +1,30 @@
+{
+  "name": "animated-ascii",
+  "version": "1.0.0",
+  "description": "Package to render animated ascii animations",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "animated",
+    "ascii",
+    "animation"
+  ],
+  "author": "Ross Krasner",
+  "license": "ISC",
+  "dependencies": {
+    "pako": "^2.1.0",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rosskrasner/animated-ascii-package.git"
+  }
+}
