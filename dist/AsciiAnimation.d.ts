@@ -1,4 +1,4 @@
-export interface Animation {
+export interface AsciiAnimationData {
     animation: string;
     animationColors?: string;
     frameRate: number;
@@ -7,7 +7,7 @@ export interface Animation {
 interface AsciiAnimationProps {
     color?: string;
     height: number;
-    animation: Animation;
+    animation: AsciiAnimationData;
 }
 export declare function AsciiAnimation({ color, height, animation, }: AsciiAnimationProps): import("react/jsx-runtime").JSX.Element;
 export {};

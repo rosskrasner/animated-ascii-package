@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import pako from "pako";
 
-export interface Animation {
+export interface AsciiAnimationData {
   animation: string;
   animationColors?: string;
   frameRate: number;
@@ -14,7 +14,7 @@ export interface Animation {
 interface AsciiAnimationProps {
   color?: string;
   height: number;
-  animation: Animation;
+  animation: AsciiAnimationData;
 }
 
 export function AsciiAnimation({
