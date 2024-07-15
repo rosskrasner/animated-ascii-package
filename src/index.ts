@@ -1,2 +1,2 @@
 // src/index.ts
-export { Preview, type Animation } from "./Preview";
+export { AsciiAnimation, type Animation } from "./AsciiAnimation";

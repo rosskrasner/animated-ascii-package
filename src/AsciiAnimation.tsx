@@ -11,13 +11,17 @@ export interface Animation {
   title: string;
 }
 
-interface PreviewProps {
+interface AsciiAnimationProps {
   color?: string;
   height: number;
   animation: Animation;
 }
 
-export function Preview({ color, height, animation }: PreviewProps) {
+export function AsciiAnimation({
+  color,
+  height,
+  animation,
+}: AsciiAnimationProps) {
   const outputRef = useRef<HTMLDivElement>(null);
   const [animationFrames, setAnimationFrames] = useState<string[] | null>(null);
   const [animationColors, setAnimationColors] = useState<string[] | null>(null);
