@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Preview = void 0;
+exports.AsciiAnimation = void 0;
 // src/index.ts
-var Preview_1 = require("./Preview");
-Object.defineProperty(exports, "Preview", { enumerable: true, get: function () { return Preview_1.Preview; } });
+var AsciiAnimation_1 = require("./AsciiAnimation");
+Object.defineProperty(exports, "AsciiAnimation", { enumerable: true, get: function () { return AsciiAnimation_1.AsciiAnimation; } });

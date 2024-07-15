@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Preview = Preview;
+exports.AsciiAnimation = AsciiAnimation;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const pako_1 = __importDefault(require("pako"));
-function Preview({ color, height, animation }) {
+function AsciiAnimation({ color, height, animation, }) {
     const outputRef = (0, react_1.useRef)(null);
     const [animationFrames, setAnimationFrames] = (0, react_1.useState)(null);
     const [animationColors, setAnimationColors] = (0, react_1.useState)(null);

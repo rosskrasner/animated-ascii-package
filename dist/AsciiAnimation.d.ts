@@ -4,10 +4,10 @@ export interface Animation {
     frameRate: number;
     title: string;
 }
-interface PreviewProps {
+interface AsciiAnimationProps {
     color?: string;
     height: number;
     animation: Animation;
 }
-export declare function Preview({ color, height, animation }: PreviewProps): import("react/jsx-runtime").JSX.Element;
+export declare function AsciiAnimation({ color, height, animation, }: AsciiAnimationProps): import("react/jsx-runtime").JSX.Element;
 export {};
