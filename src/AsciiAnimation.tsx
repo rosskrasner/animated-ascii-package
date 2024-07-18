@@ -9,6 +9,8 @@ export interface AsciiAnimationData {
   animationColors?: string;
   frameRate: number;
   title: string;
+  fileSize: number;
+  frameCount: number;
 }
 
 interface AsciiAnimationProps {
@@ -46,7 +48,9 @@ export function AsciiAnimation({
   };
 
   useEffect(() => {
+    let hasUpdated = false;
     const playAnimation = async () => {
+      if (hasUpdated) return;
       if (!animationFrames) {
         const frames = unzipB64String(animation.animation);
         setAnimationFrames(frames);
@@ -81,6 +85,7 @@ export function AsciiAnimation({
         const frames = animationFrames.length;
 
         for (let i = 0; i < frames; i++) {
+          if (hasUpdated) break;
           if (outputRef.current && animationFrames[i]) {
             const frame = animationFrames[i];
             const defaultColor = color ? color : "#000";
@@ -123,6 +128,10 @@ export function AsciiAnimation({
     };
 
     playAnimation().catch(console.error);
+
+    return () => {
+      hasUpdated = true;
+    };
   }, [color, height, animation, animationFrames, animationColors]);
 
   return <div ref={outputRef} style={{ height: `${height}px` }}></div>;
