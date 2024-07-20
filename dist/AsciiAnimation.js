@@ -33,7 +33,10 @@ function AsciiAnimation({ color, height, animation, }) {
         }
     };
     (0, react_1.useEffect)(() => {
+        let hasUpdated = false;
         const playAnimation = async () => {
+            if (hasUpdated)
+                return;
             if (!animationFrames) {
                 const frames = unzipB64String(animation.animation);
                 setAnimationFrames(frames);
@@ -63,6 +66,8 @@ function AsciiAnimation({ color, height, animation, }) {
                 document.body.removeChild(testElement);
                 const frames = animationFrames.length;
                 for (let i = 0; i < frames; i++) {
+                    if (hasUpdated)
+                        break;
                     if (outputRef.current && animationFrames[i]) {
                         const frame = animationFrames[i];
                         const defaultColor = color ? color : "#000";
@@ -71,7 +76,7 @@ function AsciiAnimation({ color, height, animation, }) {
                             : null;
                         if (frame) {
                             let frameHtml = `<pre style="font-size: ${fontSize}px;">`;
-                            if (frameColors) {
+                            if (frameColors && !color) {
                                 let currentColor = frameColors[0] ?? defaultColor;
                                 let currentSpan = `<span style="color: ${currentColor};">`;
                                 for (let j = 0; j < frame.length; j++) {
@@ -102,6 +107,9 @@ function AsciiAnimation({ color, height, animation, }) {
             }
         };
         playAnimation().catch(console.error);
+        return () => {
+            hasUpdated = true;
+        };
     }, [color, height, animation, animationFrames, animationColors]);
     return (0, jsx_runtime_1.jsx)("div", { ref: outputRef, style: { height: `${height}px` } });
 }
