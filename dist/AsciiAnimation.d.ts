@@ -3,7 +3,6 @@ export interface AsciiAnimationData {
     animationColors?: string;
     frameRate: number;
     title: string;
-    fileSize: number;
     frameCount: number;
 }
 interface AsciiAnimationProps {

@@ -94,7 +94,7 @@ export function AsciiAnimation({
 
             if (frame) {
               let frameHtml = `<pre style="font-size: ${fontSize}px;">`;
-              if (frameColors) {
+              if (frameColors && !color) {
                 let currentColor = frameColors[0] ?? defaultColor;
                 let currentSpan = `<span style="color: ${currentColor};">`;
 
