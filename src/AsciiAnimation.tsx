@@ -14,13 +14,15 @@ export interface AsciiAnimationData {
 
 interface AsciiAnimationProps {
   color?: string;
-  height: number;
+  height?: number;
+  width?: number;
   animation: AsciiAnimationData;
 }
 
 export function AsciiAnimation({
   color,
   height,
+  width,
   animation,
 }: AsciiAnimationProps) {
   const outputRef = useRef<HTMLDivElement>(null);
@@ -63,9 +65,19 @@ export function AsciiAnimation({
 
         const decompressedFirstFrame = animationFrames[0]!;
         const lines = decompressedFirstFrame.split("\n").length;
-        const maxFontSize = Math.floor(height / lines);
+        const cols = Math.max(
+          ...decompressedFirstFrame.split("\n").map((line) => line.length)
+        );
 
-        let fontSize = maxFontSize;
+        // Determine the max height and width that can be used
+        const adjustment = Math.max(cols * 0.01678, 2);
+        let maxFontSizeHeight = height ? Math.floor(height / lines) : Infinity;
+        let maxFontSizeWidth = width
+          ? Math.floor(width / cols) * adjustment
+          : Infinity;
+
+        // Use the smallest font size to fit within the provided height and width while maintaining aspect ratio
+        let fontSize = Math.min(maxFontSizeHeight, maxFontSizeWidth);
 
         const testElement = document.createElement("pre");
         testElement.style.visibility = "hidden";
@@ -74,7 +86,12 @@ export function AsciiAnimation({
         testElement.textContent = decompressedFirstFrame;
         document.body.appendChild(testElement);
 
-        while (testElement.clientHeight > height && fontSize > 0) {
+        // Adjust font size if it exceeds height or width
+        while (
+          (testElement.clientHeight > height ||
+            testElement.clientWidth > width) &&
+          fontSize > 0
+        ) {
           fontSize -= 1;
           testElement.style.fontSize = `${fontSize}px`;
         }
@@ -131,7 +148,18 @@ export function AsciiAnimation({
     return () => {
       hasUpdated = true;
     };
-  }, [color, height, animation, animationFrames, animationColors]);
+  }, [color, height, width, animation, animationFrames, animationColors]);
 
-  return <div ref={outputRef} style={{ height: `${height}px` }}></div>;
+  return (
+    <div
+      ref={outputRef}
+      style={{
+        height: height ? `${height}px` : "auto",
+        width: width ? `${width}px` : "auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    ></div>
+  );
 }
