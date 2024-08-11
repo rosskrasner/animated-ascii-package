@@ -7,9 +7,10 @@ export interface AsciiAnimationData {
 }
 interface AsciiAnimationProps {
     color?: string;
-    height: number;
+    height?: number;
+    width?: number;
     animation: AsciiAnimationData;
 }
-export declare function AsciiAnimation({ color, height, animation, }: AsciiAnimationProps): import("react/jsx-runtime").JSX.Element;
+export declare function AsciiAnimation({ color, height, width, animation, }: AsciiAnimationProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=AsciiAnimation.d.ts.map

@@ -88,8 +88,8 @@ export function AsciiAnimation({
 
         // Adjust font size if it exceeds height or width
         while (
-          (testElement.clientHeight > height ||
-            testElement.clientWidth > width) &&
+          ((height !== undefined && testElement.clientHeight > height) ||
+            (width !== undefined && testElement.clientWidth > width)) &&
           fontSize > 0
         ) {
           fontSize -= 1;

@@ -9,7 +9,7 @@ exports.AsciiAnimation = AsciiAnimation;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const pako_1 = __importDefault(require("pako"));
-function AsciiAnimation({ color, height, animation, }) {
+function AsciiAnimation({ color, height, width, animation, }) {
     const outputRef = (0, react_1.useRef)(null);
     const [animationFrames, setAnimationFrames] = (0, react_1.useState)(null);
     const [animationColors, setAnimationColors] = (0, react_1.useState)(null);
@@ -51,15 +51,25 @@ function AsciiAnimation({ color, height, animation, }) {
                     return;
                 const decompressedFirstFrame = animationFrames[0];
                 const lines = decompressedFirstFrame.split("\n").length;
-                const maxFontSize = Math.floor(height / lines);
-                let fontSize = maxFontSize;
+                const cols = Math.max(...decompressedFirstFrame.split("\n").map((line) => line.length));
+                // Determine the max height and width that can be used
+                const adjustment = Math.max(cols * 0.01678, 2);
+                let maxFontSizeHeight = height ? Math.floor(height / lines) : Infinity;
+                let maxFontSizeWidth = width
+                    ? Math.floor(width / cols) * adjustment
+                    : Infinity;
+                // Use the smallest font size to fit within the provided height and width while maintaining aspect ratio
+                let fontSize = Math.min(maxFontSizeHeight, maxFontSizeWidth);
                 const testElement = document.createElement("pre");
                 testElement.style.visibility = "hidden";
                 testElement.style.position = "absolute";
                 testElement.style.fontSize = `${fontSize}px`;
                 testElement.textContent = decompressedFirstFrame;
                 document.body.appendChild(testElement);
-                while (testElement.clientHeight > height && fontSize > 0) {
+                // Adjust font size if it exceeds height or width
+                while (((height !== undefined && testElement.clientHeight > height) ||
+                    (width !== undefined && testElement.clientWidth > width)) &&
+                    fontSize > 0) {
                     fontSize -= 1;
                     testElement.style.fontSize = `${fontSize}px`;
                 }
@@ -110,6 +120,12 @@ function AsciiAnimation({ color, height, animation, }) {
         return () => {
             hasUpdated = true;
         };
-    }, [color, height, animation, animationFrames, animationColors]);
-    return (0, jsx_runtime_1.jsx)("div", { ref: outputRef, style: { height: `${height}px` } });
+    }, [color, height, width, animation, animationFrames, animationColors]);
+    return ((0, jsx_runtime_1.jsx)("div", { ref: outputRef, style: {
+            height: height ? `${height}px` : "auto",
+            width: width ? `${width}px` : "auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+        } }));
 }
